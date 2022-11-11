@@ -96,7 +96,6 @@ void ShowTeams()
 void ShowMenu()
 {
     Console.Clear();
-    int read;
     Console.WriteLine("Co chcesz zrobic?");
     Console.WriteLine("1. Dodaj drużynę");
     Console.WriteLine("2. Zobacz drużyny");
@@ -107,37 +106,42 @@ void ShowMenu()
     Console.WriteLine("7. Mistrzostwa");
     Console.WriteLine("8. Usuń drużynę");
     Console.WriteLine("9. Zrób mecz turniejowy");
-    read = Convert.ToInt32(Console.ReadLine());
-    switch (read)
+    var read = Console.ReadKey();
+    switch (read.Key)
     {
-        case 1:
+        case ConsoleKey.D1:
             AddTeam();
             break;
-        case 2:
+        case ConsoleKey.D2:
             ShowTeams();
             break;
-        case 3:
-            AddTeam();
+        case ConsoleKey.D3:
+            ManageTeam();
             break;
-        case 4:
+        case ConsoleKey.D4:
             SaveTeams();
             break;
-        case 5:
+        case ConsoleKey.D5:
             LoadTeams();
             break;
-        case 6:
+        case ConsoleKey.D6:
             PlayMatch();
             break;
-        case 7:
+        case ConsoleKey.D7:
             PlayChampionship();
             break;
-        case 8:
+        case ConsoleKey.D8:
             RemoveTeam();
             break;
-        case 9:
+        case ConsoleKey.D9:
             PlayTournamentMatch();
             break;
     }
+}
+
+void ShowChampionshipMenu(Championship championship)
+{
+
 }
 
 void PlayMatch()
@@ -163,9 +167,6 @@ void PlayMatch()
             teamB = team;
         }
     }
-
-    Console.WriteLine(teamA.PlayerList.Count);
-    Console.WriteLine(teamB.PlayerList.Count);
 
     Match match = new Match(teamA, teamB, true);
     match.startMatch();
@@ -217,71 +218,133 @@ void PlayTournamentMatch()
 /// </summary>
 void PlayChampionship()
 {
-    int size;
     string nationality;
     Console.WriteLine("Wybierz rozmiar turnieju:");
     Console.WriteLine("1. 32");
     Console.WriteLine("2. 16");
     Console.WriteLine("3. 8");
-
-    size = Convert.ToInt32(Console.ReadLine());
+    var size = Console.ReadKey();
     List<Team> teamsToTournament = new List<Team>();
-    switch (size)
+    switch (size.Key)
     {
-        case 1:
-            for (int i = 0; i < 32; i++)
+        case ConsoleKey.D1:
+            Console.WriteLine("1. Chcę podać drużyny samemu");
+            Console.WriteLine("2. Chcę wybrać losowe drużyny");
+            size = Console.ReadKey();
+            if(size.Key == ConsoleKey.D1)
             {
-                Console.Write("Teamy które biorą udział w turnieju:");
-                foreach(var team in teamsToTournament)
+                for (int i = 0; i < 32; i++)
                 {
-                    Console.Write(team.Nationality+ " ");
-                }
-                Console.WriteLine("\nPodaj drużynę");
-                nationality = FirstToUpper(Console.ReadLine());
-                foreach(Team team in teams)
-                {
-                    if(team.Nationality == nationality)
+                    Console.Write("Teamy które biorą udział w turnieju:");
+                    foreach (var team in teamsToTournament)
                     {
-                        teamsToTournament.Add(team);
+                        Console.Write(team.Nationality + " ");
+                    }
+                    Console.WriteLine("\nPodaj drużynę");
+                    nationality = FirstToUpper(Console.ReadLine());
+                    foreach (Team team in teams)
+                    {
+                        if (team.Nationality == nationality)
+                        {
+                            teamsToTournament.Add(team);
+                        }
                     }
                 }
             }
-            break;
-        case 2:
-            for (int i = 0; i < 16; i++)
+            if(size.Key == ConsoleKey.D2)
             {
-                Console.Write("Teamy które biorą udział w turnieju:");
-                foreach (var team in teamsToTournament)
+                List<int> tmp = new List<int>();
+                for (int i = 0; i < 32; i++)
                 {
-                    Console.Write(team.Nationality + " ");
-                }
-                Console.WriteLine("\nPodaj drużynę");
-                nationality = FirstToUpper(Console.ReadLine());
-                foreach (Team team in teams)
-                {
-                    if (team.Nationality == nationality)
+                    var random = new Random();
+                    int index = random.Next(teams.Count);
+                    while (tmp.Contains(index))
                     {
-                        teamsToTournament.Add(team);
+                        index = random.Next(teams.Count);
                     }
+                    teamsToTournament.Add(teams[index]);
+                    tmp.Add(index);
                 }
             }
             break;
-        case 3:
-            for (int i = 0; i < 8; i++)
+
+        case ConsoleKey.D2:
+            Console.WriteLine("1. Chcę podać drużyny samemu");
+            Console.WriteLine("2. Chcę wybrać losowe drużyny");
+            size = Console.ReadKey();
+            if (size.Key == ConsoleKey.D1)
             {
-                Console.Write("Teamy które biorą udział w turnieju: ");
-                foreach (var team in teamsToTournament)
+                for (int i = 0; i < 16; i++)
                 {
-                    Console.Write(team.Nationality + " ");
-                }
-                Console.WriteLine("\nPodaj drużynę");
-                nationality = FirstToUpper(Console.ReadLine());
-                foreach (Team team in teams)
-                {
-                    if (team.Nationality == nationality)
+                    Console.Write("Teamy które biorą udział w turnieju:");
+                    foreach (var team in teamsToTournament)
                     {
-                        teamsToTournament.Add(team);
+                        Console.Write(team.Nationality + " ");
                     }
+                    Console.WriteLine("\nPodaj drużynę");
+                    nationality = FirstToUpper(Console.ReadLine());
+                    foreach (Team team in teams)
+                    {
+                        if (team.Nationality == nationality)
+                        {
+                            teamsToTournament.Add(team);
+                        }
+                    }
+                }
+            }
+            if (size.Key == ConsoleKey.D2)
+            {
+                List<int> tmp = new List<int>();
+                for (int i = 0; i < 16; i++)
+                {
+                    var random = new Random();
+                    int index = random.Next(teams.Count);
+                    while (tmp.Contains(index))
+                    {
+                        index = random.Next(teams.Count);
+                    }
+                    teamsToTournament.Add(teams[index]);
+                    tmp.Add(index);
+                }
+            }
+            break;
+        case ConsoleKey.D3:
+            Console.WriteLine("1. Chcę podać drużyny samemu");
+            Console.WriteLine("2. Chcę wybrać losowe drużyny");
+            size = Console.ReadKey();
+            if (size.Key == ConsoleKey.D1)
+            {
+                for (int i = 0; i < 8; i++)
+                {
+                    Console.Write("Teamy które biorą udział w turnieju:");
+                    foreach (var team in teamsToTournament)
+                    {
+                        Console.Write(team.Nationality + " ");
+                    }
+                    Console.WriteLine("\nPodaj drużynę");
+                    nationality = FirstToUpper(Console.ReadLine());
+                    foreach (Team team in teams)
+                    {
+                        if (team.Nationality == nationality)
+                        {
+                            teamsToTournament.Add(team);
+                        }
+                    }
+                }
+            }
+            if (size.Key == ConsoleKey.D2)
+            {
+                List<int> tmp = new List<int>();
+                for (int i = 0; i < 8; i++)
+                {
+                    var random = new Random();
+                    int index = random.Next(teams.Count);
+                    while (tmp.Contains(index))
+                    {
+                        index = random.Next(teams.Count);
+                    }
+                    teamsToTournament.Add(teams[index]);
+                    tmp.Add(index);
                 }
             }
             break;

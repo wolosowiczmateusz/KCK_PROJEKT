@@ -26,6 +26,11 @@ namespace KCK_PROJEKT
             CreateGroups();
         }
 
+
+
+
+
+
         public void ClearTeams()
         {
             foreach(var team in teams)
@@ -78,7 +83,6 @@ namespace KCK_PROJEKT
                 groups.Add(groupH);
             }
         }
-
 
         public void GroupDraw()
         {
