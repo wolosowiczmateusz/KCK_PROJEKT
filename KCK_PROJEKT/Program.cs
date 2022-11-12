@@ -16,13 +16,12 @@ formations = creator.getFormations();
 List<Team> teams = new List<Team>();
 Helper helper = new Helper();
 
+List<Match> matches = new List<Match>();
+Match match = new Match();
 
 
 
 ShowMenu();
-
-
-
 
 
 
@@ -139,10 +138,6 @@ void ShowMenu()
     }
 }
 
-void ShowChampionshipMenu(Championship championship)
-{
-
-}
 
 void PlayMatch()
 {
@@ -250,6 +245,11 @@ void PlayChampionship()
                         }
                     }
                 }
+                Console.WriteLine("Drużyny które wybrałeś to:");
+                foreach (var team in teamsToTournament)
+                {
+                    Console.Write(team.Nationality + ", ");
+                }
             }
             if(size.Key == ConsoleKey.D2)
             {
@@ -264,6 +264,11 @@ void PlayChampionship()
                     }
                     teamsToTournament.Add(teams[index]);
                     tmp.Add(index);
+                }
+                Console.WriteLine("Drużyny wylosowane to:");
+                foreach (var team in teamsToTournament)
+                {
+                    Console.Write(team.Nationality + ", ");
                 }
             }
             break;
@@ -291,6 +296,11 @@ void PlayChampionship()
                         }
                     }
                 }
+                Console.WriteLine("Drużyny które wybrałeś to:");
+                foreach (var team in teamsToTournament)
+                {
+                    Console.Write(team.Nationality + ", ");
+                }
             }
             if (size.Key == ConsoleKey.D2)
             {
@@ -305,6 +315,11 @@ void PlayChampionship()
                     }
                     teamsToTournament.Add(teams[index]);
                     tmp.Add(index);
+                }
+                Console.WriteLine("Drużyny wylosowane to:");
+                foreach (var team in teamsToTournament)
+                {
+                    Console.Write(team.Nationality + ", ");
                 }
             }
             break;
@@ -331,6 +346,11 @@ void PlayChampionship()
                         }
                     }
                 }
+                Console.WriteLine("Drużyny które wybrałeś to:");
+                foreach (var team in teamsToTournament)
+                {
+                    Console.Write(team.Nationality + ", ");
+                }
             }
             if (size.Key == ConsoleKey.D2)
             {
@@ -346,25 +366,25 @@ void PlayChampionship()
                     teamsToTournament.Add(teams[index]);
                     tmp.Add(index);
                 }
+                Console.WriteLine("Drużyny wylosowane to:");
+                foreach (var team in teamsToTournament)
+                {
+                    Console.Write(team.Nationality + ", ");
+                }
             }
             break;
     }
 
-    Console.WriteLine("Drużyny które wybrałeś to:");
-    foreach(var team in teamsToTournament)
-    {
-        Console.WriteLine(team.Nationality + ", ");
-    }
-
-
-
     Championship championship = new Championship(teamsToTournament);
     championship.GroupDraw();
-    championship.PlayGroupMatchesFast();
+    championship.Menu();
+    Console.WriteLine("Wrociles do tego gowna");
+    /*championship.PlayGroupMatchesFast();
     championship.ShowGroupsAndTables();
     championship.GetGroupQualifiers();
     championship.PlayPlayOffMatchesFast();
     Console.ReadKey();
+    ShowMenu();*/
     ShowMenu();
 }
 

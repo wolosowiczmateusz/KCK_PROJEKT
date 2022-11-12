@@ -58,6 +58,7 @@ namespace KCK_PROJEKT
 
         public void ShowGroup()
         {
+            sortTable();
             string values = name;
             values +="          W R P  GZ GS  RG   P\n";
             Console.WriteLine(values);

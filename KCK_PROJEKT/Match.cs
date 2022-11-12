@@ -10,6 +10,8 @@ namespace KCK_PROJEKT
     {
         // true grupa, false turniej
         public bool group;
+        public bool PlayedInGroup = false;
+        public bool PlayedInPlayoff = false;
         public Team teamA { get; set; }
         public Team teamB { get; set; }
 
@@ -29,6 +31,8 @@ namespace KCK_PROJEKT
         // 1 to teamA, 2 to teamB
         public int scoreA, scoreB = 0;
         public int winner = 0;
+
+
 
         public Match(Team teamA, Team teamB, bool group)
         {
@@ -199,6 +203,7 @@ namespace KCK_PROJEKT
             SetPointsAndWins();
         }
 
+        
         public void RegularMatchFast()
         {
             for (int i = 1; i < 46; i++)
@@ -233,7 +238,6 @@ namespace KCK_PROJEKT
                     scoreB++;
                 }
             }
-            Console.WriteLine(teamA.Nationality.Substring(0, 3) + " " + scoreA + "  " + teamB.Nationality.Substring(0, 3) + " " + scoreB);
             SetPointsAndWins();
         }
         
@@ -544,7 +548,25 @@ namespace KCK_PROJEKT
             }
         }
 
-
+        //Konćowy opis meczu i wynik
+        public void Sumarize()
+        {
+            if (winner == 0)
+            {
+                Console.WriteLine("Remis!");
+                Console.WriteLine("Wynik to: " + teamA.Nationality.Substring(0, 3) + " " + scoreA + "  " + scoreB + "  " + teamB.Nationality.Substring(0, 3));
+            }
+            if (winner == 1)
+            {
+                Console.WriteLine("Wygrała drużyna " + teamA.Nationality);
+                Console.WriteLine("Wynik to: " + teamA.Nationality.Substring(0, 3) + " " + scoreA + "  " + scoreB + "  " + teamB.Nationality.Substring(0, 3));
+            }
+            if (winner == 2)
+            {
+                Console.WriteLine("Wygrała drużyna " + teamB.Nationality);
+                Console.WriteLine("Wynik to: " + teamA.Nationality.Substring(0, 3) + " " + scoreA + "  " + scoreB + "  " + teamB.Nationality.Substring(0, 3));
+            }
+        }
         public void calcFinalGC() {
             //ustawianie jeżeli najlepszy piłkarz ma więcej ovr niz bramkarz i na odwrót
             if (teamAPlayerHighestOVR > teamB_GK_OVR)
