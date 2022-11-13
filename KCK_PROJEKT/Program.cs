@@ -19,7 +19,10 @@ Helper helper = new Helper();
 List<Match> matches = new List<Match>();
 Match match = new Match();
 
-
+int x = 0;
+int y = -10;
+int z = x + y;
+Console.WriteLine(z);
 
 ShowMenu();
 
@@ -35,6 +38,17 @@ void AddTeam()
     Console.WriteLine("Jaki kraj chciałbyś stworzyć?");
     Console.Write("Podaj kraj: ");
     nationalitySelect = FirstToUpper(Console.ReadLine());
+    foreach(var t in teams)
+    {
+        if(t.Nationality == nationalitySelect)
+        {
+            Console.Clear();
+            Console.WriteLine("Taki kraj jest juz dodany");
+            Console.WriteLine("Naciśnij dowolny przycisk aby kontynuować");
+            Console.ReadKey();
+            ShowMenu();
+        }
+    }
     Console.Clear();
     Console.WriteLine("Jaką formacje użyć?");
     Console.WriteLine("Lista możliwych formacji:");
@@ -54,8 +68,7 @@ void RemoveTeam()
     string nationalitySelect;
     int formationSelect;
 
-    Console.WriteLine("Jaki kraj chciałbyś usunąć?");
-    Console.Write("Podaj kraj: ");
+    Console.Write("Podaj nazwę kraju drużyny, którą chciałbyś usunąć: ");
     nationalitySelect = FirstToUpper(Console.ReadLine());
     Team teamToDelete = new Team();
     foreach(var team in teams)
@@ -66,6 +79,8 @@ void RemoveTeam()
         }
     }
     teams.Remove(teamToDelete);
+    Console.WriteLine("Usunięto drużynę");
+    Console.WriteLine("Naciśnij dowolny przycisk aby kontynuować");
     Console.ReadKey();
     ShowMenu();
 }
@@ -75,65 +90,73 @@ void ShowTeams()
     Console.Clear();
     foreach (var team in teams)
     {
-        if (team.PlayerList.Count == 11)
-        {
-            Console.Write("Ma już team  ");
-        }
         Console.WriteLine("Drużyna: " + team.Nationality);
         Console.WriteLine("Formacja: " + team.formation.Name + "\n");
-
     }
     if (teams.Count == 0)
     {
         Console.WriteLine("Nie ma żadnej drużyny!\n");
     }
     Console.WriteLine("Naciśnij dowolny przycisk aby kontynuować");
-    string back = FirstToUpper(Console.ReadLine());
+    Console.ReadKey();
     ShowMenu();
 }
 
 void ShowMenu()
 {
     Console.Clear();
-    Console.WriteLine("Co chcesz zrobic?");
-    Console.WriteLine("1. Dodaj drużynę");
-    Console.WriteLine("2. Zobacz drużyny");
-    Console.WriteLine("3. Edytuj drużynę");
-    Console.WriteLine("4. Zapisz drużyny");
-    Console.WriteLine("5. Wczytaj drużyny");
-    Console.WriteLine("6. Zrób mecz");
-    Console.WriteLine("7. Mistrzostwa");
-    Console.WriteLine("8. Usuń drużynę");
-    Console.WriteLine("9. Zrób mecz turniejowy");
+    Console.WriteLine("---------------------------------");
+    Console.WriteLine("|  Symulator meczy piłkarskich  |");
+    Console.WriteLine("---------------------------------");
+    Console.WriteLine("|  Wybierz akcję:               |");
+    Console.WriteLine("|  1. Wyświetl listę drużyn     |");
+    Console.WriteLine("|  2. Dodaj drużynę             |");
+    Console.WriteLine("|  3. Edytuj drużynę            |");
+    Console.WriteLine("|  4. Usuń drużynę              |");
+    Console.WriteLine("|                               |");
+    Console.WriteLine("|  5. Zapisz drużyny            |");
+    Console.WriteLine("|  6. Wczytaj drużyny           |");
+    Console.WriteLine("|                               |");
+    Console.WriteLine("|  7. Zagraj mecz zwykły        |");
+    Console.WriteLine("|  8. Zagraj mecz turniejowy    |");
+    Console.WriteLine("|  9. Mistrzostwa               |");
+    Console.WriteLine("| ESC. Zakończ program          |");
+    Console.WriteLine("---------------------------------");
     var read = Console.ReadKey();
     switch (read.Key)
     {
         case ConsoleKey.D1:
-            AddTeam();
+            ShowTeams();
             break;
         case ConsoleKey.D2:
-            ShowTeams();
+            AddTeam();
             break;
         case ConsoleKey.D3:
             ManageTeam();
             break;
         case ConsoleKey.D4:
-            SaveTeams();
-            break;
-        case ConsoleKey.D5:
-            LoadTeams();
-            break;
-        case ConsoleKey.D6:
-            PlayMatch();
-            break;
-        case ConsoleKey.D7:
-            PlayChampionship();
-            break;
-        case ConsoleKey.D8:
             RemoveTeam();
             break;
-        case ConsoleKey.D9:
+        case ConsoleKey.D5:
+            SaveTeams();
+            break;
+        case ConsoleKey.D6:
+            LoadTeams();
+            break;
+        case ConsoleKey.D7:
+            PlayMatch();
+            break;
+        case ConsoleKey.D8:
             PlayTournamentMatch();
+            break;
+        case ConsoleKey.D9:
+            PlayChampionship();
+            break;
+        case ConsoleKey.Escape:
+            break;
+            return;
+        default:
+            ShowMenu();
             break;
     }
 }
@@ -141,10 +164,11 @@ void ShowMenu()
 
 void PlayMatch()
 {
-    Console.WriteLine("Podaj pierwszą drużynę:");
+    Console.Clear();
+    Console.WriteLine("Podaj nazwę pierwszej drużyny:");
     string teamAname = Console.ReadLine();
 
-    Console.WriteLine("Podaj drugą drużynę:");
+    Console.WriteLine("Podaj nazwę drugiej drużyny:");
     string teamBname = Console.ReadLine();
     teamAname = FirstToUpper(teamAname);
     teamBname = FirstToUpper(teamBname);
@@ -165,23 +189,18 @@ void PlayMatch()
 
     Match match = new Match(teamA, teamB, true);
     match.startMatch();
-
-    Console.WriteLine(match.get_OVR());
-    Console.WriteLine(match.get_GK_OVR());
-    Console.WriteLine(match.get_DEF_OVR());
-    Console.WriteLine(match.get_MID_OVR());
-    Console.WriteLine(match.get_ST_OVR());
-    Console.WriteLine("Punkty A: " + teamA.points + "Punkty B: " + teamB.points);
-
+    Console.WriteLine("Naciśnij dowolny przycisk aby kontynuować");
     Console.ReadKey();
     ShowMenu();
 }
 
 void PlayTournamentMatch()
 {
+    Console.Clear();
+    Console.WriteLine("Mecz turniejowy");
     Console.WriteLine("Podaj pierwszą drużynę:");
     string teamAname = Console.ReadLine();
-
+    
     Console.WriteLine("Podaj drugą drużynę:");
     string teamBname = Console.ReadLine();
     teamAname = FirstToUpper(teamAname);
@@ -202,9 +221,7 @@ void PlayTournamentMatch()
     }
 
     Match match = new Match(teamA, teamB, false);
-    match.startMatchFast();
-
-    Console.ReadKey();
+    match.startMatch();
     ShowMenu();
 }
 
@@ -213,16 +230,18 @@ void PlayTournamentMatch()
 /// </summary>
 void PlayChampionship()
 {
+    Console.Clear();
     string nationality;
     Console.WriteLine("Wybierz rozmiar turnieju:");
-    Console.WriteLine("1. 32");
-    Console.WriteLine("2. 16");
-    Console.WriteLine("3. 8");
+    Console.WriteLine("1. 32 drużyny");
+    Console.WriteLine("2. 16 drużyn");
+    Console.WriteLine("3. 8 drużyn");
     var size = Console.ReadKey();
     List<Team> teamsToTournament = new List<Team>();
     switch (size.Key)
     {
         case ConsoleKey.D1:
+            Console.Clear();
             Console.WriteLine("1. Chcę podać drużyny samemu");
             Console.WriteLine("2. Chcę wybrać losowe drużyny");
             size = Console.ReadKey();
@@ -237,12 +256,32 @@ void PlayChampionship()
                     }
                     Console.WriteLine("\nPodaj drużynę");
                     nationality = FirstToUpper(Console.ReadLine());
+                    bool chosen = false;
                     foreach (Team team in teams)
                     {
                         if (team.Nationality == nationality)
                         {
-                            teamsToTournament.Add(team);
+                            if (teamsToTournament.Contains(team))
+                            {
+                                Console.WriteLine("Dodałeś już taką drużynę");
+                                Console.WriteLine("Naciśnij dowolny przycisk aby kontynuować");
+                                Console.ReadKey();
+                                i--;
+                                chosen = true;
+                            }
+                            else
+                            {
+                                teamsToTournament.Add(team);
+                                chosen = true;
+                            }
                         }
+                    }
+                    if (chosen == false)
+                    {
+                        Console.WriteLine("Nie ma takiej drużyny");
+                        Console.WriteLine("Naciśnij dowolny przycisk aby kontynuować");
+                        Console.ReadKey();
+                        i--;
                     }
                 }
                 Console.WriteLine("Drużyny które wybrałeś to:");
@@ -274,6 +313,7 @@ void PlayChampionship()
             break;
 
         case ConsoleKey.D2:
+            Console.Clear();
             Console.WriteLine("1. Chcę podać drużyny samemu");
             Console.WriteLine("2. Chcę wybrać losowe drużyny");
             size = Console.ReadKey();
@@ -288,12 +328,32 @@ void PlayChampionship()
                     }
                     Console.WriteLine("\nPodaj drużynę");
                     nationality = FirstToUpper(Console.ReadLine());
+                    bool chosen = false;
                     foreach (Team team in teams)
                     {
                         if (team.Nationality == nationality)
                         {
-                            teamsToTournament.Add(team);
+                            if (teamsToTournament.Contains(team))
+                            {
+                                Console.WriteLine("Dodałeś już taką drużynę");
+                                Console.WriteLine("Naciśnij dowolny przycisk aby kontynuować");
+                                Console.ReadKey();
+                                i--;
+                                chosen = true;
+                            }
+                            else
+                            {
+                                teamsToTournament.Add(team);
+                                chosen = true;
+                            }
                         }
+                    }
+                    if (chosen == false)
+                    {
+                        Console.WriteLine("Nie ma takiej drużyny");
+                        Console.WriteLine("Naciśnij dowolny przycisk aby kontynuować");
+                        Console.ReadKey();
+                        i--;
                     }
                 }
                 Console.WriteLine("Drużyny które wybrałeś to:");
@@ -324,6 +384,7 @@ void PlayChampionship()
             }
             break;
         case ConsoleKey.D3:
+            Console.Clear();
             Console.WriteLine("1. Chcę podać drużyny samemu");
             Console.WriteLine("2. Chcę wybrać losowe drużyny");
             size = Console.ReadKey();
@@ -331,6 +392,7 @@ void PlayChampionship()
             {
                 for (int i = 0; i < 8; i++)
                 {
+                    Console.Clear();
                     Console.Write("Teamy które biorą udział w turnieju:");
                     foreach (var team in teamsToTournament)
                     {
@@ -338,12 +400,32 @@ void PlayChampionship()
                     }
                     Console.WriteLine("\nPodaj drużynę");
                     nationality = FirstToUpper(Console.ReadLine());
+                    bool chosen = false;
                     foreach (Team team in teams)
                     {
                         if (team.Nationality == nationality)
                         {
-                            teamsToTournament.Add(team);
+                            if (teamsToTournament.Contains(team))
+                            {
+                                Console.WriteLine("Dodałeś już taką drużynę");
+                                Console.WriteLine("Naciśnij dowolny przycisk aby kontynuować");
+                                Console.ReadKey();
+                                i--;
+                                chosen = true;
+                            }
+                            else
+                            {
+                                teamsToTournament.Add(team);
+                                chosen = true;
+                            }
                         }
+                    }
+                    if(chosen==false)
+                    {
+                        Console.WriteLine("Nie ma takiej drużyny");
+                        Console.WriteLine("Naciśnij dowolny przycisk aby kontynuować");
+                        Console.ReadKey();
+                        i--;
                     }
                 }
                 Console.WriteLine("Drużyny które wybrałeś to:");
@@ -376,15 +458,8 @@ void PlayChampionship()
     }
 
     Championship championship = new Championship(teamsToTournament);
-    championship.GroupDraw();
+
     championship.Menu();
-    Console.WriteLine("Wrociles do tego gowna");
-    /*championship.PlayGroupMatchesFast();
-    championship.ShowGroupsAndTables();
-    championship.GetGroupQualifiers();
-    championship.PlayPlayOffMatchesFast();
-    Console.ReadKey();
-    ShowMenu();*/
     ShowMenu();
 }
 
@@ -407,11 +482,21 @@ void LoadTeams()
     Console.WriteLine("Podaj nazwę pliku do załadowania");
     string fileName = Console.ReadLine();
     System.Xml.Serialization.XmlSerializer xml = new System.Xml.Serialization.XmlSerializer(typeof(List<Team>));
-
-    using (Stream reader = new FileStream(fileName, FileMode.Open))
+    try
     {
-        teams = (List<Team>)xml.Deserialize(reader);
+        using (Stream reader = new FileStream(fileName, FileMode.Open))
+        {
+            teams = (List<Team>)xml.Deserialize(reader);
+        }
     }
+    catch(FileNotFoundException e)
+    {
+        Console.WriteLine("Nie znaleziono takiego pliku");
+        Console.WriteLine("Wciśnij dowolny przycisk aby kontynuować");
+        Console.ReadKey();
+        ShowMenu();
+    }
+
     foreach(var team in teams)
     {
         foreach(var player in team.PlayerList)
@@ -426,10 +511,8 @@ void LoadTeams()
 void ManageTeam()
 {
     Console.Clear();
-    int choice;
     string nationality;
-    Console.WriteLine("Jaki team chciałbyś edytować?");
-    Console.WriteLine("Podaj nazwę klubu: ");
+    Console.WriteLine("Podaj nazwę drużyny, którą chcesz edytować: ");
     nationality = FirstToUpper(Console.ReadLine());
 
     Team team = new Team();
@@ -444,8 +527,8 @@ void ManageTeam()
     if (team.Nationality == null)
     {
         Console.WriteLine("Nie ma takiego klubu \nWciśnij 1 aby spróbować ponownie\nWciśnij dowolny przycisk aby wrócić do menu");
-        choice = Convert.ToInt32(Console.ReadLine());
-        if (choice == 1)
+        var key = Console.ReadKey(); 
+        if (key.Key == ConsoleKey.D1)
         {
             ManageTeam();
         }
@@ -462,11 +545,10 @@ void ManageTeam()
     Console.WriteLine("Co chciałbyś zrobić?: ");
     Console.WriteLine("1. Dodać zawodnika do drużyny");
     Console.WriteLine("2. Wyświetlić drużynę");
-    Console.WriteLine("3. Wyświetlić drużynę (DEBUG MODE)");
-    Console.WriteLine("4. Wróć do menu");
-    choice = Convert.ToInt32(Console.ReadLine());
+    Console.WriteLine("3. Wróć do menu");
+    var key2 = Console.ReadKey();
     
-    if (choice == 1)
+    if (key2.Key == ConsoleKey.D1)
     {
         Player tmp = new Player();
         tmp = SearchPlayer(nationality,formation,team,tmp);
@@ -493,22 +575,14 @@ void ManageTeam()
         team.addPlayer(player);
         goto WhatToDoNext;
     }
-    if (choice == 2)
+    if (key2.Key == ConsoleKey.D2)
     {
         ShowTeamWithPos(team);
-        string tmp = Console.ReadLine();
+        Console.WriteLine("Naciśnij dowolny przycisk aby kontynuować");
+        Console.ReadKey();
         goto WhatToDoNext;
     }
-    if (choice == 3)
-    {
-        foreach(var _player in team.PlayerList)
-        {
-            Console.WriteLine(_player.FullName + " " + _player.PosNr);
-        }
-        string tmp = Console.ReadLine();
-        goto WhatToDoNext;
-    }
-    if(choice == 4)
+    else
     {
         ShowMenu();
     }
@@ -518,11 +592,11 @@ void ManageTeam()
 
 Player SearchPlayer(string nationality, Formation formation, Team team, Player pl)
 {
-    Console.WriteLine("Na jaką pozycję chciałbyś dodać zawodnika?");
+    Console.Clear();
     int tmp = 1;
 
     ShowTeamWithPos(team);
-    
+    Console.WriteLine("\nNa jaką pozycję chciałbyś dodać/zamienić zawodnika?");
     int pos = Convert.ToInt32(Console.ReadLine());
     Console.Clear();
     Console.WriteLine("Wpisz nazwisko zawodnika:");
@@ -543,8 +617,8 @@ Player SearchPlayer(string nationality, Formation formation, Team team, Player p
     if (playersSearch.Count == 0)
     {
         Console.Write("Nie znaleziono żadnego piłkarza. Wciśnij 1 aby spróbować ponownie\nWciśnij dowolny przycisk aby wrócić");
-        int choice = Convert.ToInt32(Console.ReadLine());
-        if (choice == 1)
+        var key = Console.ReadKey();
+        if (key.Key == ConsoleKey.D1)
         {
             pl = SearchPlayer(nationality,formation,team, pl);
             return pl;
@@ -557,27 +631,46 @@ Player SearchPlayer(string nationality, Formation formation, Team team, Player p
     }
     else
     {
+        chooseplayer:
+        Console.Clear();
         tmp = 1;
         foreach (var p in playersSearch)
         {
             Console.WriteLine(tmp + " " + p.FullName + ", Wiek: " + p.Age);
             tmp++;
         }
+
         Console.WriteLine("Wybierz piłkarza:");
         Player player = new Player();
         int chosenPlayer = Convert.ToInt32(Console.ReadLine());
-        player = playersSearch[chosenPlayer - 1];
-        player.PosNr = pos;
-        Console.WriteLine(player.PosNr);
-        Console.WriteLine("Wybrany piłkarz to: " + player.FullName + ". Będzie grał na pozycji: " + team.formation.Positions[pos - 1]);
-        Thread.Sleep(600);
-        return player;
+        if(chosenPlayer > tmp-1 || chosenPlayer<=0)
+        {
+            Console.WriteLine("Wybrałeś osobę spoza kategorii");
+            Console.WriteLine("Wciśnij 1 aby spróbować jeszcze raz, lub naciśnij dowolny przycisk aby wrócić do edytowanie drużyny");
+            var key = Console.ReadKey();
+            if(key.Key == ConsoleKey.D1)
+            {
+                goto chooseplayer;
+            }
+            else
+            {
+                ManageTeam();
+                return pl;
+            }
+        }
+        else
+        {
+            player = playersSearch[chosenPlayer - 1];
+            player.PosNr = pos;
+            return player;
+        }
     }
 }
 
 
 void ShowTeamWithPos(Team team)
 {
+    Console.Clear();
     Formation formation = team.formation;
     bool playerExist = false;
     Player player = new Player();
@@ -601,6 +694,8 @@ void ShowTeamWithPos(Team team)
         }
         playerExist = false;
     }
+
+
 }
 
 

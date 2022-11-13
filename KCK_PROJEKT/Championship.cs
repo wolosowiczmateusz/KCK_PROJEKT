@@ -21,7 +21,7 @@ namespace KCK_PROJEKT
         public List<Group> groups = new List<Group>();
         public List<Match> groupMatches = new List<Match>();
         public List<Match> playoffMatches = new List<Match>();
-
+        public List<int> teamsAdded = new List<int>();
         public Championship(List<Team> teams)
         {
             this.teams = teams;
@@ -35,46 +35,170 @@ namespace KCK_PROJEKT
         //Losowanie grup
         public void GroupDraw()
         {
-            List<int> tmp = new List<int>();
-            foreach (var group in groups)
+
+            foreach(var group in groups)
             {
-                for (int i = 0; i < 4; i++)
+                bool elseactivated = false;
+                int groupCount = group.teams.Count();
+                for (int i = 0; i < 4 - groupCount; i++)
                 {
+                    int antiblock = 0;
                     var random = new Random();
                     int index = random.Next(teams.Count);
-                    while (tmp.Contains(index))
+                    while (teamsAdded.Contains(index))
                     {
+                        antiblock++;
+                        if(antiblock > numOfTeams*100000)
+                        {
+                            break;
+                        }
                         index = random.Next(teams.Count);
                     }
                     group.Add(teams[index]);
-                    tmp.Add(index);
+                    teamsAdded.Add(index);
                 }
-
-                Match match = new Match(group.teams[0], group.teams[1], true);
+                Match match0 = new Match(group.teams[0], group.teams[1], true);
                 Match match1 = new Match(group.teams[0], group.teams[2], true);
                 Match match2 = new Match(group.teams[0], group.teams[3], true);
                 Match match3 = new Match(group.teams[1], group.teams[2], true);
                 Match match4 = new Match(group.teams[1], group.teams[3], true);
                 Match match5 = new Match(group.teams[2], group.teams[3], true);
-                groupMatches.Add(match);
-                groupMatches.Add(match1);
-                groupMatches.Add(match2);
-                groupMatches.Add(match3);
-                groupMatches.Add(match4);
-                groupMatches.Add(match5);
+                bool m0 = true;
+                bool m1 = true;
+                bool m2 = true;
+                bool m3 = true;
+                bool m4 = true;
+                bool m5 = true;
+                if (groupMatches.Count > 0)
+                {
+                    foreach (var match in groupMatches)
+                    {
+                        if(match.teamA.Nationality == group.teams[0].Nationality || match.teamA.Nationality == group.teams[1].Nationality)
+                        {
+                            if(match.teamB.Nationality == group.teams[0].Nationality || match.teamB.Nationality == group.teams[1].Nationality)
+                            {
+                                m0 = false;
+                            }
+                        }
+                    }
+                    foreach (var match in groupMatches)
+                    {
+                        if (match.teamA.Nationality == group.teams[0].Nationality || match.teamA.Nationality == group.teams[2].Nationality)
+                        {
+                            if (match.teamB.Nationality == group.teams[0].Nationality || match.teamB.Nationality == group.teams[2].Nationality)
+                            {
+                                m1 = false;
+                            }
+                        }
+                    }
+                    foreach (var match in groupMatches)
+                    {
+                        if (match.teamA.Nationality == group.teams[0].Nationality || match.teamA.Nationality == group.teams[3].Nationality)
+                        {
+                            if (match.teamB.Nationality == group.teams[0].Nationality || match.teamB.Nationality == group.teams[3].Nationality)
+                            {
+                                m2 = false;
+                            }
+                        }
+                    }
+                    foreach (var match in groupMatches)
+                    {
+                        if (match.teamA.Nationality == group.teams[1].Nationality || match.teamA.Nationality == group.teams[2].Nationality)
+                        {
+                            if (match.teamB.Nationality == group.teams[1].Nationality || match.teamB.Nationality == group.teams[2].Nationality)
+                            {
+                                m3 = false;
+                            }
+                        }
+                    }
+                    foreach (var match in groupMatches)
+                    {
+                        if (match.teamA.Nationality == group.teams[1].Nationality || match.teamA.Nationality == group.teams[3].Nationality)
+                        {
+                            if (match.teamB.Nationality == group.teams[1].Nationality || match.teamB.Nationality == group.teams[3].Nationality)
+                            {
+                                m4 = false;
+                            }
+                        }
+                    }
+                    foreach (var match in groupMatches)
+                    {
+                        if (match.teamA.Nationality == group.teams[2].Nationality || match.teamA.Nationality == group.teams[3].Nationality)
+                        {
+                            if (match.teamB.Nationality == group.teams[2].Nationality || match.teamB.Nationality == group.teams[3].Nationality)
+                            {
+                                m5 = false;
+                            }
+                        }
+                    }
+                }
+                if(groupMatches.Count == 0)
+                {
+                    groupMatches.Add(match0);
+                    groupMatches.Add(match1);
+                    groupMatches.Add(match2);
+                    groupMatches.Add(match3);
+                    groupMatches.Add(match4);
+                    groupMatches.Add(match5);
+                    elseactivated = true;
+                }
+
+                if(elseactivated == false)
+                {
+                    if (m0)
+                    {
+                        groupMatches.Add(match0);
+                    }
+                    if (m1)
+                    {
+                        groupMatches.Add(match1);
+                    }
+                    if (m2)
+                    {
+                        groupMatches.Add(match2);
+                    }
+                    if (m3)
+                    {
+                        groupMatches.Add(match3);
+                    }
+                    if (m4)
+                    {
+                        groupMatches.Add(match4);
+                    }
+                    if (m5)
+                    {
+                        groupMatches.Add(match5);
+                    }
+                }
             }
         }
+
+
+        //DEBUG METHOD
+        public void ShowMatches()
+        {
+            foreach(var match in groupMatches)
+            {
+                Console.WriteLine(match.teamA.Nationality + "   " + match.teamB.Nationality);
+            }
+            Console.ReadKey();
+            Menu();
+        }
+
 
         public void Menu()
         {
             Console.Clear();
-            Console.WriteLine("MENU TURNIEJU");
-            Console.WriteLine("Wybierz opcje:");
-            Console.WriteLine("1. Zagraj mecz grupowy");
-            Console.WriteLine("2. Pokaż grupy");
-            Console.WriteLine("3. Wyjdz z mistrzostw");
-            Console.WriteLine("4. Zasymuluj grupę");
-            Console.WriteLine("5. Przejdź do fazy pucharowej");
+            Console.WriteLine("-----------------------------------");
+            Console.WriteLine("| MENU TURNIEJU                   |");
+            Console.WriteLine("-----------------------------------");
+            Console.WriteLine("| 1. Zagraj mecz grupowy          |");
+            Console.WriteLine("| 2. Pokaż grupy                  |");
+            Console.WriteLine("| 3. Zasymuluj resztę meczy grupy |");
+            Console.WriteLine("| 4. Edytuj grupy                 |");
+            Console.WriteLine("| 5. Przejdź do fazy pucharowej   |");
+            Console.WriteLine("| 6. Wyjdz z mistrzostw           |");
+            Console.WriteLine("-----------------------------------");
             var key = Console.ReadKey();
             switch (key.Key)
             {
@@ -85,25 +209,37 @@ namespace KCK_PROJEKT
                     ShowGroupsAndTables();
                     break;
                 case ConsoleKey.D3:
-                    break;
-                case ConsoleKey.D4:
+                    if (groupMatches.Count != numOfTeams * 1.5)
+                    {
+                        Console.Clear();
+                        Console.WriteLine("Grupy nie są pełne, nie można zasymulować meczy");
+                        Console.WriteLine("Naciśnij dowolny przycisk aby kontynuować");
+                        Console.ReadKey();
+                        Menu();
+                        return;
+                    }
                     SimulateRestOfGroupMatches();
                     Console.Clear();
                     Console.WriteLine("Zasymulowano nierozegrane mecze");
-                    Console.WriteLine("Wciśnij dowolny przycisk aby kontynuować");
+                    Console.WriteLine("Naciśnij dowolny przycisk aby kontynuować");
                     Console.ReadKey();
                     Menu();
+                    break;
+                case ConsoleKey.D4:
+                    EditGroups();
                     break;
                 case ConsoleKey.D5:
                     if (playoffStarted == true)
                     {
                         initPlayoffStageMatches();
                         PlayoffMenu();
+                        return;
                     }
                     foreach (var match in groupMatches)
                     {
                         if (match.PlayedInGroup == false)
                         {
+                            Console.Clear();
                             Console.WriteLine("Nie rozegrano jeszcze wszystkich meczy");
                             Console.WriteLine("Jeżeli chcesz przesymulować resztę meczy i zacząć fazę pucharową kliknij 1");
                             Console.WriteLine("Jeżeli nie chcesz przesymulować meczy i wrócić do menu kliknij 2");
@@ -122,6 +258,7 @@ namespace KCK_PROJEKT
                                 playoffStarted = true;
                                 initPlayoffStageMatches();
                                 PlayoffMenu();
+                                return;
 
                             }
                             if (tmp.Key == ConsoleKey.D2)
@@ -129,6 +266,11 @@ namespace KCK_PROJEKT
                                 Menu();
                             }
                         }
+                    }
+                    if(groupMatches.Count == 0)
+                    {
+                        Menu();
+                        return;
                     }
                     GetGroupQualifiers();
                     //tworzy mecze do fazy pucharowej
@@ -142,47 +284,66 @@ namespace KCK_PROJEKT
                     initPlayoffStageMatches();
                     PlayoffMenu();
                     break;
+                case ConsoleKey.D6:
+                    return;
+                    break;
             }
-            return;
         }
 
         public void PlayoffMenu()
         {
-            Console.Clear();
-            Console.WriteLine("PLAYOFFY");
-            Console.WriteLine("Wybierz opcje:");
-            Console.WriteLine("1. Zagraj mecz playoffowy");
-            Console.WriteLine("2. Pokaż drabinke");
-            Console.WriteLine("3. Wróć do menu mistrzostw");
             playoffStage = CalcPlayoffStage();
-            Console.WriteLine("Stage "+ playoffStage + "   Mecze zag " +NumOfPlayoffMatchesPlayed());
-            var key = Console.ReadKey();
+            Console.Clear();
+            Console.WriteLine("-------------------------------");
+            Console.WriteLine("| MENU PLAYOFF'ÓW             |");
+            Console.WriteLine("-------------------------------");
+            Console.WriteLine("| 1. Zagraj mecz playoffowy   |");
+            Console.WriteLine("| 2. Pokaż drabinke           |");
+            Console.WriteLine("| 3. Symuluj resztę meczy     |");
 
+            if (playoffStage == 0)
+            {
+                Console.WriteLine("| 4. Wróć do menu mistrzostw  |");
+                Console.WriteLine("-------------------------------");
+            }
+            else
+            {
+                Console.WriteLine("-------------------------------");
+            }
+            
+            var key = Console.ReadKey();
 
             switch (key.Key)
             {
                 case ConsoleKey.D1:
-                    if(playoffStage == 16)
+                    if(playoffStage == 0)
                     {
-                        Play16Match();
+                        Console.WriteLine("Zagrano wszystkie mecze! Koniec mistrzostw");
+                        Console.ReadKey();
+                        PlayoffMenu();
                     }
-                    if(playoffStage == 8)
+                    else
                     {
-                        Play16Match();
+                        PlayPlayoffMatch();
                     }
-                    if(playoffStage == 4)
-                    {
-                        Play16Match();
-                    }
-                    if(playoffStage == 2)
-                    {
-                        Play16Match();
-                    }
+                    break;
+                case ConsoleKey.D2:
+                    ShowPlayoffTable();
+                    break;
+                case ConsoleKey.D3:
+                    SimulateRestOfPlayoffs();
+                    break;
+                case ConsoleKey.D4:
+                    Menu();
+                    break;
+                default:
+                    Menu();
                     break;
             }
         }
         public void PlayGroupMatch()
         {
+            Console.Clear();
             string name = " ";
             Console.WriteLine("Podaj nazwę grupy:");
             name += Console.ReadLine().Trim().ToUpper();
@@ -190,10 +351,12 @@ namespace KCK_PROJEKT
             {
                 if(group.name.Contains(name))
                 {
-                    Console.WriteLine("podaj drużyny które chcesz żeby zagrały mecz");
                     GiveTeams:
+                    Console.Clear();
                     string teamA, teamB;
+                    Console.WriteLine("Podaj nazwę pierwszej drużyny");
                     teamA = FirstToUpper(Console.ReadLine());
+                    Console.WriteLine("Podaj nazwę drugiej drużyny");
                     teamB = FirstToUpper(Console.ReadLine());
                     
                     int tmp = 0;
@@ -219,12 +382,17 @@ namespace KCK_PROJEKT
                                 {
                                     Console.WriteLine("Ten mecz został już zagrany");
                                     match.Sumarize();
+                                    Menu();
+                                    return;
                                 }
                                 else
                                 {
                                     match.startMatch();
-                                    match.Sumarize();
+                                    Console.WriteLine("Naciśnij dowolny klawisz aby kontynuować");
+                                    Console.ReadKey();
                                     match.PlayedInGroup = true;
+                                    Menu();
+                                    return;
                                 }
                                 
                             }
@@ -236,10 +404,12 @@ namespace KCK_PROJEKT
                         if(key.Key == ConsoleKey.D1)
                         {
                             goto GiveTeams;
+                            return;
                         }
                         else
                         {
                             Menu();
+                            return;
                         }
 
                     }
@@ -249,12 +419,280 @@ namespace KCK_PROJEKT
             Console.WriteLine("Naciśnij dowolny guzik aby kontynuować");
             Console.ReadKey();
             Menu();
+            return;
         }
 
+        public void EditGroup()
+        {
+            Console.Clear();
+            string name = " ";
+            Console.WriteLine("Podaj nazwę grupy:");
+            name += Console.ReadLine().Trim().ToUpper();
+            foreach(var group in groups)
+            {
+                if (group.name.Contains(name))
+                {
+                    Console.Clear();
+                    Console.WriteLine("Grupa"+name+ "\nCo chcesz zrobić:");
+                    Console.WriteLine("1. Dodaj drużynę do grupy");
+                    Console.WriteLine("2. Usuń drużynę z grupy");
+                    var key = Console.ReadKey();
+                    switch (key.Key)
+                    {
+                        case ConsoleKey.D1:
+                            Console.Clear();
+                            Console.WriteLine("Dodawanie drużyny");
+                            Console.WriteLine("Podaj nazwę drużyny:");
+                            string teamName = FirstToUpper(Console.ReadLine());
+                            bool exists = false;
+                            foreach(var team in teams)
+                            {
+                                if(team.Nationality == teamName)
+                                {
+                                    if (group.Add(team) == false)
+                                    {
+                                        Console.WriteLine("Nie można dodać ponieważ grupa jest pełna, lub dana drużyna jest już dodana. wciśnij guzik aby kontynuować");
+                                        Console.ReadKey();
+                                        Menu();
+                                        return;
+                                    }
+                                    else
+                                    {
+                                        foreach(var team2 in group.teams)
+                                        {
+                                            if(team2 != team)
+                                            {
+                                                Match match = new Match(team, team2, true);
+                                                groupMatches.Add(match);
+                                            }
+                                        }
+                                        int index = teams.IndexOf(team);
+                                        teamsAdded.Add(index);
+                                        exists = true;
+                                    }
+                                }
+                            }
+                            if(exists == false)
+                            {
+                                Console.WriteLine("Podałeś złą nazwę teamu, wciśnij dowolny guzik aby kontynuować");
+                                Console.ReadKey();
 
+                            }
+                            else
+                            {
+                                Console.WriteLine("Dodano drużynę");
+                            }
+                            Menu();
+                            return;
+                            break;
+                        case ConsoleKey.D2:
+                            Console.Clear();
+                            Console.WriteLine("Usuwanie drużyny");
+                            Console.WriteLine("Podaj nazwę drużyny:");
+                            string teamNameRem = FirstToUpper(Console.ReadLine());
+                            bool existsRem = false;
+                            foreach (var team in teams)
+                            {
+                                if (team.Nationality == teamNameRem)
+                                {
+                                    if (group.Remove(team) == false)
+                                    {
+                                        Console.WriteLine("Nie można usunąć ponieważ nie ma drużyn, wciśnij guzik aby kontynuować");
+                                        Console.ReadKey();
+                                        Menu();
+                                        return;
+                                        break;
+                                    }
+                                    // służy do usuwania meczy które miały drużynę którą teraz usuwam
+                                    List<int> indexesToDelete = new List<int>();
+                                    foreach(var match in groupMatches)
+                                    {
+                                        if(match.teamA.Nationality == team.Nationality || match.teamB.Nationality == team.Nationality)
+                                        {
+                                            indexesToDelete.Add(groupMatches.IndexOf(match));
+                                        }
+                                    }
+                                    foreach(var i in indexesToDelete)
+                                    {
+                                        groupMatches.RemoveAt(i);
+                                    }
 
+                                    int index = teams.IndexOf(team);
+                                    teamsAdded.Remove(index);
+                                    existsRem = true;
+                                }
+                            }
+                            if (existsRem == false)
+                            {
+                                Console.WriteLine("Podałeś złą nazwę teamu, wciśnij dowolny guzik aby kontynuować");
+                                Console.ReadKey();
+                                Menu();
+                                return;
+                            }
+                            else
+                            {
+                                Console.WriteLine("Dodano drużynę");
+                            }
+                            Menu();
+                            return;
+                            break;
+                    }
 
+                }
+            }
+            Console.WriteLine("Nie ma takiej grupy");
+            Console.WriteLine("Naciśnij dowolny guzik aby kontynuować");
+            Console.ReadKey();
+            Menu();
+            return;
+        }
 
+        public void EditGroups()
+        {
+            Console.Clear();
+            Console.WriteLine("Co chciałbyś zrobić:");
+            Console.WriteLine("1. Wygeneruj losowe grupy");
+            Console.WriteLine("2. Edytuj grupę");
+            var key = Console.ReadKey();
+            switch (key.Key)
+            {
+                case ConsoleKey.D1:
+                    GroupDraw();
+                    Console.Clear();
+                    Console.WriteLine("Grupy wygenerowane, naciśnij dowolny przycisk aby kontynuować");
+                    Console.ReadKey();
+                    Menu();
+                    break;
+                case ConsoleKey.D2:
+                    EditGroup();
+                    break;
+            }
+
+        }
+
+        public void ShowPlayoffTable()
+        {
+            Console.Clear();
+            if(numOfTeams == 32)
+            {
+                for (int i = 0; i < matchNumber; i++)
+                {
+                    if(i == 0)
+                    {
+                        Console.WriteLine("1/16 finału\n");
+                    }
+                    if(i == 8)
+                    {
+                        Console.WriteLine("Ćwierćfinał\n");
+                    }
+                    if(i == 12)
+                    {
+                        Console.WriteLine("Półfinał\n");
+                    }
+                    if(i == 14)
+                    {
+                        Console.WriteLine("Finał\n");
+                    }
+                    else { }
+                    if(playoffMatches[i].scoreA == playoffMatches[i].scoreB)
+                    {
+                        if(playoffMatches[i].PlayedInPlayoff == false)
+                        {
+                            Console.WriteLine(playoffMatches[i].teamA.Nationality.Substring(0, 3) + " " + playoffMatches[i].scoreA + "  " + playoffMatches[i].scoreB + " " + playoffMatches[i].teamB.Nationality.Substring(0, 3));
+                        }
+                        else
+                        {
+                            Console.WriteLine(playoffMatches[i].teamA.Nationality.Substring(0, 3) + " " + (playoffMatches[i].scoreA + playoffMatches[i].scoreApen) + " (" + playoffMatches[i].scoreA + ")" + " " + "(" + playoffMatches[i].scoreB + ") " + (playoffMatches[i].scoreB + playoffMatches[i].scoreBpen) + " " + playoffMatches[i].teamB.Nationality.Substring(0, 3));
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine(playoffMatches[i].teamA.Nationality.Substring(0, 3) + " " + playoffMatches[i].scoreA + "  " + playoffMatches[i].scoreB + " " + playoffMatches[i].teamB.Nationality.Substring(0, 3));
+                    }
+                    if (i == 7 || i == 11 || i == 13)
+                    {
+                        Console.WriteLine("\n");
+                    }
+                }
+            }
+            if(numOfTeams == 16)
+            {
+                for (int i = 0; i < matchNumber; i++)
+                {
+                    if (i == 0)
+                    {
+                        Console.WriteLine("Ćwierćfinał\n");
+                    }
+                    if (i == 4)
+                    {
+                        Console.WriteLine("Półfinał\n");
+                    }
+                    if (i == 6)
+                    {
+                        Console.WriteLine("Finał\n");
+                    }
+                    else { }
+                    if (playoffMatches[i].scoreA == playoffMatches[i].scoreB)
+                    {
+                        if (playoffMatches[i].PlayedInPlayoff == false)
+                        {
+                            Console.WriteLine(playoffMatches[i].teamA.Nationality.Substring(0, 3) + " " + playoffMatches[i].scoreA + "  " + playoffMatches[i].scoreB + " " + playoffMatches[i].teamB.Nationality.Substring(0, 3));
+                        }
+                        else
+                        {
+                            Console.WriteLine(playoffMatches[i].teamA.Nationality.Substring(0, 3) + " " + (playoffMatches[i].scoreA + playoffMatches[i].scoreApen) + " (" + playoffMatches[i].scoreA + ")" + " " + "(" + playoffMatches[i].scoreB + ") " + (playoffMatches[i].scoreB + playoffMatches[i].scoreBpen) + " " + playoffMatches[i].teamB.Nationality.Substring(0, 3));
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine(playoffMatches[i].teamA.Nationality.Substring(0, 3) + " " + playoffMatches[i].scoreA + "  " + playoffMatches[i].scoreB + " " + playoffMatches[i].teamB.Nationality.Substring(0, 3));
+                    }
+                    if (i == 3 || i == 5)
+                    {
+                        Console.WriteLine("\n");
+                    }
+                }
+            }
+            if (numOfTeams == 8)
+            {
+                for (int i = 0; i < matchNumber; i++)
+                {
+                    if (i == 0)
+                    {
+                        Console.WriteLine("Półfinał\n");
+                    }
+                    if (i == 2)
+                    {
+                        Console.WriteLine("Finał\n");
+                    }
+                    else { }
+                    if (playoffMatches[i].scoreA == playoffMatches[i].scoreB)
+                    {
+                        if (playoffMatches[i].PlayedInPlayoff == false)
+                        {
+                            Console.WriteLine(playoffMatches[i].teamA.Nationality.Substring(0, 3) + " " + playoffMatches[i].scoreA + "  " + playoffMatches[i].scoreB + " " + playoffMatches[i].teamB.Nationality.Substring(0, 3));
+                        }
+                        else
+                        {
+                            Console.WriteLine(playoffMatches[i].teamA.Nationality.Substring(0, 3) + " " + (playoffMatches[i].scoreA + playoffMatches[i].scoreApen) + " (" + playoffMatches[i].scoreA + ")" + " " + "(" + playoffMatches[i].scoreB + ") " + (playoffMatches[i].scoreB + playoffMatches[i].scoreBpen) + " " + playoffMatches[i].teamB.Nationality.Substring(0, 3));
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine(playoffMatches[i].teamA.Nationality.Substring(0, 3) + " " + playoffMatches[i].scoreA + "  " + playoffMatches[i].scoreB + " " + playoffMatches[i].teamB.Nationality.Substring(0, 3));
+                    }
+                    if (i == 1)
+                    {
+                        Console.WriteLine("\n");
+                    }
+                }
+            }
+
+            Console.WriteLine("\nNaciśnij dowolny przycisk aby kontynuować");
+            Console.ReadKey();
+            PlayoffMenu();
+            return;
+        }
 
         public void SimulateRestOfGroupMatches()
         {
@@ -266,6 +704,35 @@ namespace KCK_PROJEKT
                     match.PlayedInGroup = true;
                 }
             }
+        }
+        public void SimulateRestOfPlayoffs()
+        {
+            while(playoffStage != 0)
+            {
+                for (int i = 0; i < playoffStage / 2; i++)
+                {
+                    if (playoffMatches[i + teamsQualifiedAll.Count - teamsQualified.Count].PlayedInPlayoff == false)
+                    {
+                        playoffMatches[i + teamsQualifiedAll.Count - teamsQualified.Count].startMatchFast();
+                        if (playoffMatches[i + teamsQualifiedAll.Count - teamsQualified.Count].winner == 1)
+                        {
+                            teamsToDisqualify.Add(playoffMatches[i + teamsQualifiedAll.Count - teamsQualified.Count].teamB);
+                        }
+                        else
+                        {
+                            teamsToDisqualify.Add(playoffMatches[i + teamsQualifiedAll.Count - teamsQualified.Count].teamA);
+                        }
+                        playoffMatches[i + teamsQualifiedAll.Count - teamsQualified.Count].PlayedInPlayoff = true;
+                        initPlayoffStageMatches();
+                    }
+                }
+            }
+            Console.Clear();
+            Console.WriteLine("Zasymulowano resztę meczy");
+            Console.WriteLine("Naciśnij dowolny przycisk aby kontynuować");
+            Console.ReadKey();
+            PlayoffMenu();
+            return;
         }
         public void GetGroupQualifiers()
         {
@@ -293,7 +760,9 @@ namespace KCK_PROJEKT
             }
             Console.WriteLine("-------------------------------------");
             Console.WriteLine("Naciśnij guzik aby wrócić do menu mistrzostw");
+
             Console.ReadKey();
+
             Menu();
         }
 
@@ -355,29 +824,15 @@ namespace KCK_PROJEKT
             }
         }
 
-
-
-
-        public void PlayQuarterFinal()
+        public void PlayPlayoffMatch()
         {
-
-        }
-        public void PlaySemifinal()
-        {
-
-        }
-
-        public void Play16Match()
-        {
-            foreach(var team in teamsQualified)
-            {
-                Console.Write(team.Nationality + " ");
-            }
 
             GiveTeamsPlayoff:
-            Console.WriteLine("podaj drużyny które chcesz żeby zagrały mecz");
+            Console.Clear();
             string teamA, teamB;
+            Console.WriteLine("Podaj pierwszą drużynę");
             teamA = FirstToUpper(Console.ReadLine());
+            Console.WriteLine("Podaj drugą drużynę");
             teamB = FirstToUpper(Console.ReadLine());
 
             int tmp = 0;
@@ -403,7 +858,10 @@ namespace KCK_PROJEKT
                         {
                             Console.WriteLine("Ten mecz został już zagrany");
                             playoffMatches[i+ teamsQualifiedAll.Count - teamsQualified.Count].Sumarize();
+                            Console.WriteLine("naciśnij dowolny klawisz aby kontynuować");
+                            Console.ReadKey();
                             PlayoffMenu();
+                            return;
                         }
                         else
                         {
@@ -416,10 +874,10 @@ namespace KCK_PROJEKT
                             {
                                 teamsToDisqualify.Add(playoffMatches[i+ teamsQualifiedAll.Count - teamsQualified.Count].teamA);
                             }
-                            playoffMatches[i+ teamsQualifiedAll.Count - teamsQualified.Count].Sumarize();
                             playoffMatches[i+ teamsQualifiedAll.Count - teamsQualified.Count].PlayedInPlayoff = true;
                             initPlayoffStageMatches();
                             PlayoffMenu();
+                            return;
                         }
                     }
                 }
@@ -432,6 +890,7 @@ namespace KCK_PROJEKT
                 else
                 {
                     PlayoffMenu();
+                    return;
                 }
             }
             else
@@ -445,6 +904,7 @@ namespace KCK_PROJEKT
                 else
                 {
                     PlayoffMenu();
+                    return;
                 }
             }
         }
@@ -455,21 +915,21 @@ namespace KCK_PROJEKT
             playoffStage = CalcPlayoffStage();
             if (numOfTeams == 32)
             {
-                if(NumOfPlayoffMatchesPlayed() == 0 || NumOfPlayoffMatchesPlayed() == 8 || NumOfPlayoffMatchesPlayed() == 12 || NumOfPlayoffMatchesPlayed() == 14)
+                if(NumOfPlayoffMatchesPlayed() == 0 || NumOfPlayoffMatchesPlayed() == 8 || NumOfPlayoffMatchesPlayed() == 12 || NumOfPlayoffMatchesPlayed() == 14 || NumOfPlayoffMatchesPlayed() == 15)
                 {
                     initPlayoffStageMatchesSub(playoffStage);
                 }
             }
             if(numOfTeams == 16)
             {
-                if (NumOfPlayoffMatchesPlayed() == 0 || NumOfPlayoffMatchesPlayed() == 4 || NumOfPlayoffMatchesPlayed() == 6)
+                if (NumOfPlayoffMatchesPlayed() == 0 || NumOfPlayoffMatchesPlayed() == 4 || NumOfPlayoffMatchesPlayed() == 6 || NumOfPlayoffMatchesPlayed() == 7)
                 {
                     initPlayoffStageMatchesSub(playoffStage);
                 }
             }
             if (numOfTeams == 8)
             {
-                if (NumOfPlayoffMatchesPlayed() == 0 || NumOfPlayoffMatchesPlayed() == 2)
+                if (NumOfPlayoffMatchesPlayed() == 0 || NumOfPlayoffMatchesPlayed() == 2 || NumOfPlayoffMatchesPlayed() == 3)
                 {
                     initPlayoffStageMatchesSub(playoffStage);
                 }
@@ -487,8 +947,6 @@ namespace KCK_PROJEKT
                     teamsQualified.Remove(team);
                 }
             }
-            Console.WriteLine("odkurwiam inita meczy");
-            Thread.Sleep(1900);
             for (int i = 0; i < stage / 2; i++)
             {
                 playoffMatches[matchNumber].teamA = teamsQualified[i];
@@ -519,11 +977,8 @@ namespace KCK_PROJEKT
         public int CalcPlayoffStage()
         {
             int num = 0;
-            if (NumOfPlayoffMatchesPlayed() == 0)
-            {
-                num = numOfTeams / 2;
-            }
-            else if(NumOfPlayoffMatchesPlayed() < (numOfTeams / 4))
+
+            if(NumOfPlayoffMatchesPlayed() < (numOfTeams / 4))
             {
                 num = numOfTeams / 2;
             }
@@ -538,6 +993,10 @@ namespace KCK_PROJEKT
             else if (NumOfPlayoffMatchesPlayed() < ((numOfTeams / 4) + (numOfTeams / 8) + (numOfTeams / 16) + (numOfTeams / 32)))
             {
                 num = numOfTeams / 16;
+            }
+            else if (NumOfPlayoffMatchesPlayed() == 0)
+            {
+                num = numOfTeams / 2;
             }
             return num;
         }

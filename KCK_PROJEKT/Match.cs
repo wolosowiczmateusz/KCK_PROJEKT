@@ -30,6 +30,8 @@ namespace KCK_PROJEKT
         public int teamBPlayerHighestOVR = 0;
         // 1 to teamA, 2 to teamB
         public int scoreA, scoreB = 0;
+        public int scoreApen = 0;
+        public int scoreBpen = 0;
         public int winner = 0;
 
 
@@ -48,7 +50,8 @@ namespace KCK_PROJEKT
         {
             if (teamA.PlayerList.Count < 11 || teamB.PlayerList.Count < 11)
             {
-                Console.WriteLine("nie można rozegrać meczu, bo drużyny są niepełne");
+                Console.WriteLine("Nie można rozegrać meczu, sprawdź czy wybrałeś dobre drużyny");
+
             }
             else
             {
@@ -63,10 +66,6 @@ namespace KCK_PROJEKT
                 calc_OVR();
 
                 calcFinalGC();
-                Console.WriteLine(teamAgoalChance);
-                Console.WriteLine(teamBgoalChance);
-                Console.WriteLine(teamAPlayerHighestOVR);
-                Console.WriteLine(teamBPlayerHighestOVR);
                 if (group == true)
                 {
                     RegularMatch();
@@ -163,20 +162,21 @@ namespace KCK_PROJEKT
             for(int i = 1; i < 46; i++)
             {
                 Random rand = new Random();
-                float rnd = rand.Next(1, 10000);
-                rnd = rnd / 10000;
+                float rnd = rand.Next(1, 100000);
+                rnd = rnd / 100000;
                 if (rnd < teamAgoalChance)
                 {
                     scoreA++;
                 }
-                rnd = rand.Next(1, 10000);
-                rnd = rnd / 10000;
+                rnd = rand.Next(1, 100000);
+                rnd = rnd / 100000;
                 if (rnd < teamBgoalChance)
                 {
                     scoreB++;
                 }
-                Console.WriteLine("Jest minuta: " + i + "  " + teamA.Nationality.Substring(0, 3) + " " + scoreA + "  " + teamB.Nationality.Substring(0, 3) + " " + scoreB);
-                Thread.Sleep(100);
+                Console.Clear();
+                Console.WriteLine("Jest minuta: " + i + " Wynik:  " + teamA.Nationality.Substring(0, 3) + " " + scoreA + "  " + teamB.Nationality.Substring(0, 3) + " " + scoreB);
+                Thread.Sleep(120);
             }
             Console.WriteLine("Koniec pierwszej połowy\nNaciśnij dowolny przycisk aby zacząć drugą połowę");
 
@@ -185,21 +185,23 @@ namespace KCK_PROJEKT
             for (int i = 45; i < 91; i++)
             {
                 Random rand = new Random();
-                float rnd = rand.Next(1, 10000);
-                rnd = rnd / 10000;
+                float rnd = rand.Next(1, 100000);
+                rnd = rnd / 100000;
                 if (rnd < teamAgoalChance)
                 {
                     scoreA++;
                 }
-                rnd = rand.Next(1, 10000);
-                rnd = rnd / 10000;
+                rnd = rand.Next(1, 100000);
+                rnd = rnd / 100000;
                 if (rnd < teamBgoalChance)
                 {
                     scoreB++;
                 }
+                Console.Clear();
                 Console.WriteLine("Jest minuta: " + i + "  " + teamA.Nationality.Substring(0, 3) + " " + scoreA + "  " + teamB.Nationality.Substring(0, 3) + " " + scoreB);
-                Thread.Sleep(100);
+                Thread.Sleep(120);
             }
+            Console.WriteLine("Koniec meczu");
             SetPointsAndWins();
         }
 
@@ -209,14 +211,14 @@ namespace KCK_PROJEKT
             for (int i = 1; i < 46; i++)
             {
                 Random rand = new Random();
-                float rnd = rand.Next(1, 10000);
-                rnd = rnd / 10000;
+                float rnd = rand.Next(1, 100000);
+                rnd = rnd / 100000;
                 if (rnd < teamAgoalChance)
                 {
                     scoreA++;
                 }
-                rnd = rand.Next(1, 10000);
-                rnd = rnd / 10000;
+                rnd = rand.Next(1, 100000);
+                rnd = rnd / 100000;
                 if (rnd < teamBgoalChance)
                 {
                     scoreB++;
@@ -225,14 +227,14 @@ namespace KCK_PROJEKT
             for (int i = 45; i < 91; i++)
             {
                 Random rand = new Random();
-                float rnd = rand.Next(1, 10000);
-                rnd = rnd / 10000;
+                float rnd = rand.Next(1, 100000);
+                rnd = rnd / 100000;
                 if (rnd < teamAgoalChance)
                 {
                     scoreA++;
                 }
-                rnd = rand.Next(1, 10000);
-                rnd = rnd / 10000;
+                rnd = rand.Next(1, 100000);
+                rnd = rnd / 100000;
                 if (rnd < teamBgoalChance)
                 {
                     scoreB++;
@@ -247,20 +249,21 @@ namespace KCK_PROJEKT
                 for (int i = 1; i < 46; i++)
                 {
                     Random rand = new Random();
-                    float rnd = rand.Next(1, 10000);
-                    rnd = rnd / 10000;
+                    float rnd = rand.Next(1, 100000);
+                    rnd = rnd / 100000;
                     if (rnd < teamAgoalChance)
                     {
                         scoreA++;
                     }
-                    rnd = rand.Next(1, 10000);
-                    rnd = rnd / 10000;
+                    rnd = rand.Next(1, 100000);
+                    rnd = rnd / 100000;
                     if (rnd < teamBgoalChance)
                     {
                         scoreB++;
                     }
+                    Console.Clear();
                     Console.WriteLine("Jest minuta: " + i + "  " + teamA.Nationality.Substring(0, 3) + " " + scoreA + "  " + teamB.Nationality.Substring(0, 3) + " " + scoreB);
-                    Thread.Sleep(25);
+                    Thread.Sleep(120);
                 }
                 Console.WriteLine("Koniec pierwszej połowy\nNaciśnij dowolny przycisk aby zacząć drugą połowę");
 
@@ -269,26 +272,37 @@ namespace KCK_PROJEKT
                 for (int i = 45; i < 91; i++)
                 {
                     Random rand = new Random();
-                    float rnd = rand.Next(1, 10000);
-                    rnd = rnd / 10000;
+                    float rnd = rand.Next(1, 100000);
+                    rnd = rnd / 100000;
                     if (rnd < teamAgoalChance)
                     {
                         scoreA++;
                     }
-                    rnd = rand.Next(1, 10000);
-                    rnd = rnd / 10000;
+                    rnd = rand.Next(1, 100000);
+                    rnd = rnd / 100000;
                     if (rnd < teamBgoalChance)
                     {
                         scoreB++;
                     }
+                    Console.Clear();
                     Console.WriteLine("Jest minuta: " + i + "  " + teamA.Nationality.Substring(0, 3) + " " + scoreA + "  " + teamB.Nationality.Substring(0, 3) + " " + scoreB);
-                    Thread.Sleep(25);
+                    Thread.Sleep(120);
                 }
                 SetPointsAndWins();
-                if(winner == 0)
+                if (winner == 0)
                 {
+                    Console.WriteLine("Koniec meczu");
+                    Console.WriteLine("Naciśnij dowolny przycisk aby zacząć dogrywkę");
+                    Console.ReadKey();
                     Overtime();
                 }
+                else
+                {
+                    Console.WriteLine("Koniec meczu");
+                    Console.WriteLine("Naciśnij dowolny przycisk aby kontynuować");
+                    Console.ReadKey();
+                }
+
             }
         }
         public void TournamentMatchFast()
@@ -296,14 +310,14 @@ namespace KCK_PROJEKT
             for (int i = 1; i < 46; i++)
             {
                 Random rand = new Random();
-                float rnd = rand.Next(1, 10000);
-                rnd = rnd / 10000;
+                float rnd = rand.Next(1, 100000);
+                rnd = rnd / 100000;
                 if (rnd < teamAgoalChance)
                 {
                     scoreA++;
                 }
-                rnd = rand.Next(1, 10000);
-                rnd = rnd / 10000;
+                rnd = rand.Next(1, 100000);
+                rnd = rnd / 100000;
                 if (rnd < teamBgoalChance)
                 {
                     scoreB++;
@@ -312,14 +326,14 @@ namespace KCK_PROJEKT
             for (int i = 45; i < 91; i++)
             {
                 Random rand = new Random();
-                float rnd = rand.Next(1, 10000);
-                rnd = rnd / 10000;
+                float rnd = rand.Next(1, 100000);
+                rnd = rnd / 100000;
                 if (rnd < teamAgoalChance)
                 {
                     scoreA++;
                 }
-                rnd = rand.Next(1, 10000);
-                rnd = rnd / 10000;
+                rnd = rand.Next(1, 100000);
+                rnd = rnd / 100000;
                 if (rnd < teamBgoalChance)
                 {
                     scoreB++;
@@ -330,28 +344,28 @@ namespace KCK_PROJEKT
             {
                 OvertimeFast();
             }
-            else { Console.WriteLine(teamA.Nationality.Substring(0, 3) + " " + scoreA + "  " + teamB.Nationality.Substring(0, 3) + " " + scoreB); }
+            else {}
         }
         public void Overtime()
         {
-            Console.WriteLine("Zaczyna się dogrywka");
             for (int i = 90; i < 106; i++)
             {
                 Random rand = new Random();
-                float rnd = rand.Next(1, 10000);
-                rnd = rnd / 10000;
+                float rnd = rand.Next(1, 100000);
+                rnd = rnd / 100000;
                 if (rnd < teamAgoalChance)
                 {
                     scoreA++;
                 }
-                rnd = rand.Next(1, 10000);
-                rnd = rnd / 10000;
+                rnd = rand.Next(1, 100000);
+                rnd = rnd / 100000;
                 if (rnd < teamBgoalChance)
                 {
                     scoreB++;
                 }
+                Console.Clear();
                 Console.WriteLine("Jest minuta: " + i + "  " + teamA.Nationality.Substring(0, 3) + " " + scoreA + "  " + teamB.Nationality.Substring(0, 3) + " " + scoreB);
-                Thread.Sleep(100);
+                Thread.Sleep(120);
             }
             Console.WriteLine("Koniec pierwszej połowy dogrywki\nNaciśnij dowolny przycisk aby zacząć drugą połowę");
 
@@ -360,29 +374,36 @@ namespace KCK_PROJEKT
             for (int i = 105; i < 121; i++)
             {
                 Random rand = new Random();
-                float rnd = rand.Next(1, 10000);
-                rnd = rnd / 10000;
+                float rnd = rand.Next(1, 100000);
+                rnd = rnd / 100000;
                 if (rnd < teamAgoalChance)
                 {
                     scoreA++;
                 }
-                rnd = rand.Next(1, 10000);
-                rnd = rnd / 10000;
+                rnd = rand.Next(1, 100000);
+                rnd = rnd / 100000;
                 if (rnd < teamBgoalChance)
                 {
                     scoreB++;
                 }
+                Console.Clear();
                 Console.WriteLine("Jest minuta: " + i + "  " + teamA.Nationality.Substring(0, 3) + " " + scoreA + "  " + teamB.Nationality.Substring(0, 3) + " " + scoreB);
-                Thread.Sleep(100);
+                Thread.Sleep(120);
             }
 
             if(scoreA == scoreB)
             {
+                Console.WriteLine("Koniec meczu");
+                Console.WriteLine("Naciśnij dowolny przycisk aby rozpocząć karne");
+                Console.ReadKey();
                 Penalties();
             }
 
             else
             {
+                Console.WriteLine("Koniec meczu");
+                Console.WriteLine("Naciśnij dowolny przycisk aby kontynuować");
+                Console.ReadKey();
                 SetPointsAndWins();
             }
         }
@@ -408,14 +429,14 @@ namespace KCK_PROJEKT
             for (int i = 105; i < 121; i++)
             {
                 Random rand = new Random();
-                float rnd = rand.Next(1, 10000);
-                rnd = rnd / 10000;
+                float rnd = rand.Next(1, 100000);
+                rnd = rnd / 100000;
                 if (rnd < teamAgoalChance)
                 {
                     scoreA++;
                 }
-                rnd = rand.Next(1, 10000);
-                rnd = rnd / 10000;
+                rnd = rand.Next(1, 100000);
+                rnd = rnd / 100000;
                 if (rnd < teamBgoalChance)
                 {
                     scoreB++;
@@ -434,8 +455,7 @@ namespace KCK_PROJEKT
         }
         public void Penalties()
         {
-            int scoreApen = 0;
-            int scoreBpen = 0;
+
             Random rand = new Random();
             float rnd;
             for (int i = 0; i<5; i++)
@@ -461,7 +481,8 @@ namespace KCK_PROJEKT
                 }
                 else
                 {
-                    Console.WriteLine("Wynik karnych po " + (i+1) + "kolejce to: " + scoreApen + ":" + scoreBpen);
+                    Console.WriteLine("Wynik karnych po " + (i+1) + " kolejce to: " + scoreApen + ":" + scoreBpen);
+                    Thread.Sleep(350);
                 }
             }
             int tmp = 5;
@@ -478,7 +499,8 @@ namespace KCK_PROJEKT
                     scoreBpen++;
                 }
                 tmp++;
-                Console.WriteLine("Wynik karnych po " + tmp + "kolejce to: " + scoreApen + ":" + scoreBpen);
+                Console.WriteLine("Wynik karnych po " + tmp + " kolejce to: " + scoreApen + ":" + scoreBpen);
+                Thread.Sleep(350);
             }
             Console.WriteLine("Wynik karnych to: " + scoreApen + " : " + scoreBpen);
             Console.WriteLine("Całkowity Wynik to: " + (scoreA + scoreApen) + " : " + (scoreB + scoreBpen));
@@ -489,12 +511,12 @@ namespace KCK_PROJEKT
             else {
                 winner = 2; 
             }
+            Console.WriteLine("Naciśnij dowolny klawisz aby kontynuować");
+            Console.ReadKey();
         }
 
         public void PenaltiesFast()
         {
-            int scoreApen = 0;
-            int scoreBpen = 0;
             Random rand = new Random();
             float rnd;
             for (int i = 0; i < 5; i++)
@@ -555,157 +577,40 @@ namespace KCK_PROJEKT
             {
                 Console.WriteLine("Remis!");
                 Console.WriteLine("Wynik to: " + teamA.Nationality.Substring(0, 3) + " " + scoreA + "  " + scoreB + "  " + teamB.Nationality.Substring(0, 3));
+
             }
             if (winner == 1)
             {
                 Console.WriteLine("Wygrała drużyna " + teamA.Nationality);
                 Console.WriteLine("Wynik to: " + teamA.Nationality.Substring(0, 3) + " " + scoreA + "  " + scoreB + "  " + teamB.Nationality.Substring(0, 3));
+
             }
             if (winner == 2)
             {
                 Console.WriteLine("Wygrała drużyna " + teamB.Nationality);
                 Console.WriteLine("Wynik to: " + teamA.Nationality.Substring(0, 3) + " " + scoreA + "  " + scoreB + "  " + teamB.Nationality.Substring(0, 3));
+
             }
         }
         public void calcFinalGC() {
             //ustawianie jeżeli najlepszy piłkarz ma więcej ovr niz bramkarz i na odwrót
-            if (teamAPlayerHighestOVR > teamB_GK_OVR)
-            {
-                teamAgoalChance += 0.001;
-            }
-            if (teamBPlayerHighestOVR > teamA_GK_OVR)
-            {
-                teamBgoalChance += 0.001;
-            }
+            int diffBetweenAHighAndBGK = teamAPlayerHighestOVR - Convert.ToInt32(teamB_GK_OVR);
+            int diffBetweenBHighAndAGK = teamBPlayerHighestOVR - Convert.ToInt32(teamA_GK_OVR);
+            int diffBetweenA_OVR_B_OVR = Convert.ToInt32(teamA_OVR) - Convert.ToInt32(teamB_OVR);
 
-            if (teamAPlayerHighestOVR+1 < teamB_GK_OVR)
-            {
-                teamAgoalChance -= 0.001;
-            }
-            if (teamBPlayerHighestOVR+1 < teamA_GK_OVR)
-            {
-                teamBgoalChance -= 0.001;
-            }
+            teamAgoalChance += (diffBetweenAHighAndBGK * 0.0006);
+            teamBgoalChance += (diffBetweenBHighAndAGK * 0.0006);
 
-
-
-
-
-            //ustawianie jeżeli najlepszy piłkarz ma więcej ovr niz bramkarz o 5 i na odwrot
-            if (teamAPlayerHighestOVR >= teamB_GK_OVR+5)
+            if(diffBetweenA_OVR_B_OVR > 0)
             {
-                teamAgoalChance += 0.003;
+                teamAgoalChance += (Math.Abs(diffBetweenA_OVR_B_OVR) * 0.00011);
+                teamBgoalChance -= (Math.Abs(diffBetweenA_OVR_B_OVR) * 0.00003);
             }
-            if (teamBPlayerHighestOVR >= teamA_GK_OVR+5)
+            else
             {
-                teamAgoalChance += 0.003;
+                teamBgoalChance += (Math.Abs(diffBetweenA_OVR_B_OVR) * 0.00011);
+                teamAgoalChance -= (Math.Abs(diffBetweenA_OVR_B_OVR) * 0.00003);
             }
-
-            if (teamAPlayerHighestOVR+5 < teamB_GK_OVR)
-            {
-                teamAgoalChance -= 0.003;
-            }
-            if (teamBPlayerHighestOVR+5 < teamA_GK_OVR)
-            {
-                teamBgoalChance -= 0.003;
-            }
-
-            //ustawianie jeżeli najlepszy piłkarz ma więcej ovr niz bramkarz o 10
-            if (teamAPlayerHighestOVR >= teamB_GK_OVR + 10)
-            {
-                teamAgoalChance += 0.006;
-            }
-            if (teamBPlayerHighestOVR >= teamA_GK_OVR + 10)
-            {
-                teamAgoalChance += 0.006;
-            }
-
-            // różnica OVR całej drużyny o 15
-            if(teamA_OVR > teamB_OVR + 15)
-            {
-                teamAgoalChance += 0.002;
-            }
-            if (teamB_OVR > teamA_OVR + 15)
-            {
-                teamBgoalChance += 0.002;
-            }
-
-            // różnica OVR całej drużyny o 25
-            if (teamA_OVR > teamB_OVR + 25)
-            {
-                teamAgoalChance += 0.003;
-                teamBgoalChance -= 0.001;
-            }
-            if (teamB_OVR > teamA_OVR + 25)
-            {
-                teamBgoalChance += 0.003;
-                teamAgoalChance -= 0.001;
-            }
-
-            // różnica OVR całej drużyny o 40
-            if (teamA_OVR > teamB_OVR + 40)
-            {
-                teamAgoalChance += 0.005;
-                teamBgoalChance -= 0.002;
-            }
-            if (teamB_OVR > teamA_OVR + 40)
-            {
-                teamBgoalChance += 0.005;
-                teamAgoalChance -= 0.002;
-            }
-
-            // różnica OVR całej drużyny o 50
-            if (teamA_OVR > teamB_OVR + 50)
-            {
-                teamAgoalChance += 0.006;
-                teamBgoalChance -= 0.002;
-            }
-            if (teamB_OVR > teamA_OVR + 50)
-            {
-                teamBgoalChance += 0.006;
-                teamAgoalChance -= 0.002;
-            }
-
-            if (teamA_OVR > teamB_OVR + 75)
-            {
-                teamAgoalChance += 0.010;
-                teamBgoalChance -= 0.003;
-            }
-            if (teamB_OVR > teamA_OVR + 75)
-            {
-                teamBgoalChance += 0.010;
-                teamAgoalChance -= 0.003;
-            }
-
-            if (teamA_OVR > teamB_OVR + 110)
-            {
-                teamAgoalChance += 0.011;
-                teamBgoalChance -= 0.003;
-            }
-            if (teamB_OVR > teamA_OVR + 110)
-            {
-                teamBgoalChance += 0.011;
-                teamAgoalChance -= 0.003;
-            }
-
-            if (teamA_OVR > teamB_OVR + 170)
-            {
-                teamAgoalChance += 0.017;
-                teamBgoalChance -= 0.005;
-            }
-            if (teamB_OVR > teamA_OVR + 170)
-            {
-                teamBgoalChance += 0.017;
-                teamAgoalChance -= 0.005;
-            }
-
-
-
-
-
-
-
-
 
         }
 

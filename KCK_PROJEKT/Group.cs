@@ -16,9 +16,23 @@ namespace KCK_PROJEKT
             this.name = name;
         }
 
-        public void Add(Team team)
+        public bool Add(Team team)
         {
-            teams.Add(team);
+            if (teams.Count < 4 && !teams.Contains(team))
+            {
+                teams.Add(team);
+                return true;
+            }
+            return false;
+        }
+        public bool Remove(Team team)
+        {
+            if(teams.Count > 0)
+            {
+                teams.Remove(team);
+                return true;
+            }
+            return false;
         }
 
 
