@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 using KCK_PROJEKT;
 
 
-string fileName = "fifka_new.json";
+string fileName = "fifadb.json";
 string jsonString = File.ReadAllText(fileName);
 List<Player> players = JsonSerializer.Deserialize<List<Player>>(jsonString)!;
 foreach(var player in players)
