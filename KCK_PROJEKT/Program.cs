@@ -19,11 +19,6 @@ Helper helper = new Helper();
 List<Match> matches = new List<Match>();
 Match match = new Match();
 
-int x = 0;
-int y = -10;
-int z = x + y;
-Console.WriteLine(z);
-
 ShowMenu();
 
 
