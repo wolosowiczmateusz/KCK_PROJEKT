@@ -1,0 +1,5 @@
+C:\Users\wolos\source\repos\KCK_PROJEKT\KCK_PROJEKT\bin\publish\KCK_PROJEKT.exe
+C:\Users\wolos\source\repos\KCK_PROJEKT\KCK_PROJEKT\bin\publish\KCK_PROJEKT.dll
+C:\Users\wolos\source\repos\KCK_PROJEKT\KCK_PROJEKT\bin\publish\KCK_PROJEKT.deps.json
+C:\Users\wolos\source\repos\KCK_PROJEKT\KCK_PROJEKT\bin\publish\KCK_PROJEKT.runtimeconfig.json
+C:\Users\wolos\source\repos\KCK_PROJEKT\KCK_PROJEKT\bin\publish\KCK_PROJEKT.pdb
