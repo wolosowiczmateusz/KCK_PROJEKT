@@ -1,0 +1,15 @@
+C:\Users\wolos\Downloads\KCK_PROJEKT-master\KCK_PROJEKT-master\KCK_PROJEKT\obj\Debug\net6.0\KCK_PROJEKT.csproj.AssemblyReference.cache
+C:\Users\wolos\Downloads\KCK_PROJEKT-master\KCK_PROJEKT-master\KCK_PROJEKT\obj\Debug\net6.0\KCK_PROJEKT.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\wolos\Downloads\KCK_PROJEKT-master\KCK_PROJEKT-master\KCK_PROJEKT\obj\Debug\net6.0\KCK_PROJEKT.AssemblyInfoInputs.cache
+C:\Users\wolos\Downloads\KCK_PROJEKT-master\KCK_PROJEKT-master\KCK_PROJEKT\obj\Debug\net6.0\KCK_PROJEKT.AssemblyInfo.cs
+C:\Users\wolos\Downloads\KCK_PROJEKT-master\KCK_PROJEKT-master\KCK_PROJEKT\obj\Debug\net6.0\KCK_PROJEKT.csproj.CoreCompileInputs.cache
+C:\Users\wolos\Downloads\KCK_PROJEKT-master\KCK_PROJEKT-master\KCK_PROJEKT\bin\Debug\net6.0\KCK_PROJEKT.exe
+C:\Users\wolos\Downloads\KCK_PROJEKT-master\KCK_PROJEKT-master\KCK_PROJEKT\bin\Debug\net6.0\KCK_PROJEKT.deps.json
+C:\Users\wolos\Downloads\KCK_PROJEKT-master\KCK_PROJEKT-master\KCK_PROJEKT\bin\Debug\net6.0\KCK_PROJEKT.runtimeconfig.json
+C:\Users\wolos\Downloads\KCK_PROJEKT-master\KCK_PROJEKT-master\KCK_PROJEKT\bin\Debug\net6.0\KCK_PROJEKT.dll
+C:\Users\wolos\Downloads\KCK_PROJEKT-master\KCK_PROJEKT-master\KCK_PROJEKT\bin\Debug\net6.0\KCK_PROJEKT.pdb
+C:\Users\wolos\Downloads\KCK_PROJEKT-master\KCK_PROJEKT-master\KCK_PROJEKT\obj\Debug\net6.0\KCK_PROJEKT.dll
+C:\Users\wolos\Downloads\KCK_PROJEKT-master\KCK_PROJEKT-master\KCK_PROJEKT\obj\Debug\net6.0\refint\KCK_PROJEKT.dll
+C:\Users\wolos\Downloads\KCK_PROJEKT-master\KCK_PROJEKT-master\KCK_PROJEKT\obj\Debug\net6.0\KCK_PROJEKT.pdb
+C:\Users\wolos\Downloads\KCK_PROJEKT-master\KCK_PROJEKT-master\KCK_PROJEKT\obj\Debug\net6.0\KCK_PROJEKT.genruntimeconfig.cache
+C:\Users\wolos\Downloads\KCK_PROJEKT-master\KCK_PROJEKT-master\KCK_PROJEKT\obj\Debug\net6.0\ref\KCK_PROJEKT.dll
